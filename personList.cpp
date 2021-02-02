@@ -12,14 +12,16 @@ PersonList::PersonList(){
 }
 
 PersonList::~PersonList(){
-    delete [] theList;
+    for (int i = 0; i < numPeople; ++i) {
+        delete theList[i];
+    }
+    delete[] theList;
 }
 
-void PersonList::addPerson(const char* child_name, const char* father_name, const char* mother_name){
+void PersonList::addPerson(const char* child_name,const char* father_name,const char* mother_name){
     Person *father = 0;
     Person *mother = 0;
     
-    // try to find the three names in the theList
     for(int i = 0; i < numPeople; i++){
         if(!strcmp(theList[i]->getName(), child_name)){
             cout << "ERROR: " << child_name << " already has parents!!!";
@@ -32,12 +34,10 @@ void PersonList::addPerson(const char* child_name, const char* father_name, cons
     }
    
     if(father == 0){
-      // father_name is not in the theList so create a new person
       father = new Person(father_name, 0, 0);
       insertIntoList(father);
     }
     if(mother == 0){
-      // mother_name is not in the theList so create a new person
       mother = new Person(mother_name, 0, 0);
       insertIntoList(mother);
     }
